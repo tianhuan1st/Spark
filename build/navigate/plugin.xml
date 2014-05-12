@@ -1,0 +1,12 @@
+<plugin>
+    <name>Navigate Plugin</name>
+    <version>1.0</version>
+    <author>Sunry</author>
+    <homePage>http://www.jivesoftware.org</homePage>
+    <email>foo@foo.com</email>
+    <description>Navigate using Baidu LBS Service.</description>
+    <class>cn.bmwm.navigate.NavigatePlugin</class>
+    <minSparkVersion>2.6.0</minSparkVersion>
+    <os>Windows,Linux,Mac</os>
+    <java>1.6.0_00</java>
+</plugin>
