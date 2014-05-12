@@ -6,6 +6,7 @@ import org.jivesoftware.spark.ChatManager;
 import org.jivesoftware.spark.SparkManager;
 import org.jivesoftware.spark.plugin.Plugin;
 import org.jivesoftware.spark.ui.ChatRoom;
+import org.jivesoftware.spark.ui.ChatRoomButton;
 import org.jivesoftware.spark.ui.ChatRoomListenerAdapter;
 import org.jivesoftware.spark.ui.MessageEventListener;
 import org.jivesoftware.spark.ui.rooms.ChatRoomImpl;
@@ -15,6 +16,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 /**
 
  */
@@ -23,7 +25,7 @@ public class NavigatePlugin implements Plugin {
     /**
      * Called after Spark is loaded to initialize the new plugin.
      */
-    public void initialize() {
+    public void initialize2() {
         // Retrieve ChatManager from the SparkManager
         final ChatManager chatManager = SparkManager.getChatManager();
 
@@ -75,6 +77,31 @@ public class NavigatePlugin implements Plugin {
             }
         });
     }
+
+    public void initialize() {
+        addChatRoomButton();
+    }
+
+    private void addChatRoomButton() {
+        // Retrieve ChatManager from the SparkManager
+        ChatManager chatManager = SparkManager.getChatManager();
+
+        // Create a new ChatRoomButton.
+        final ChatRoomButton button = new ChatRoomButton("Push Me");
+
+
+        // Add to a new ChatRoom when the ChatRoom opens.
+        chatManager.addChatRoomListener(new ChatRoomListenerAdapter() {
+            public void chatRoomOpened(ChatRoom room) {
+                room.getToolBar().addChatRoomButton(button);
+            }
+
+            public void chatRoomLeft(ChatRoom room) {
+                room.getToolBar().removeChatRoomButton(button);
+            }
+        });
+    }
+
 
     /**
      * Called when Spark is shutting down to allow for persistence of information
