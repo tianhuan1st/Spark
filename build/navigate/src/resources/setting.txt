@@ -1,0 +1,6 @@
+AK k6LRNg83n9cTeZIgqAClxL4Z
+SK Vrq3bdtzPLEh2GOsMTmsv7yZ2ImSaUrz
+
+http://api.map.baidu.com/location/ip?ak=k6LRNg83n9cTeZIgqAClxL4Z&coor=bd09ll
+
+http://api.map.baidu.com/staticimage?center=120.14887182,33.37986188&width=300&height=200&zoom=11

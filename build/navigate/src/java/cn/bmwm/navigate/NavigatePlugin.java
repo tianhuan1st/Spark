@@ -85,19 +85,40 @@ public class NavigatePlugin implements Plugin {
     private void addChatRoomButton() {
         // Retrieve ChatManager from the SparkManager
         ChatManager chatManager = SparkManager.getChatManager();
-
-        // Create a new ChatRoomButton.
-        final ChatRoomButton button = new ChatRoomButton("Push Me");
+        final ClassLoader cl = getClass().getClassLoader();
+        // Create a new ChatRoomButton.导航按钮
+        final ChatRoomButton navigationButton = new ChatRoomButton("navigate");
+        navigationButton.setIcon(new ImageIcon(cl.getResource("otr_off.png")));
+        // Set tooltips
+        navigationButton.setToolTipText("navigate one to other");
 
 
         // Add to a new ChatRoom when the ChatRoom opens.
         chatManager.addChatRoomListener(new ChatRoomListenerAdapter() {
             public void chatRoomOpened(ChatRoom room) {
-                room.getToolBar().addChatRoomButton(button);
+                if (room instanceof ChatRoomImpl) {
+                    final ChatRoomImpl roomImpl = (ChatRoomImpl) room;
+                    navigationButton.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            //
+
+                            Frame f=    new Frame();
+                            f.setSize(200,200);
+                            f.setVisible(true);
+                    /*        try {
+                                roomImpl.getChatInputEditor().insertText("click button");
+                            } catch (BadLocationException e1) {
+                                e1.printStackTrace();
+                            }*/
+                        }
+                    });
+
+                    roomImpl.getToolBar().addChatRoomButton(navigationButton);
+                }
             }
 
             public void chatRoomLeft(ChatRoom room) {
-                room.getToolBar().removeChatRoomButton(button);
+                room.getToolBar().removeChatRoomButton(navigationButton);
             }
         });
     }
