@@ -96,7 +96,7 @@ public class NavigatePlugin implements Plugin {
         final ClassLoader cl = getClass().getClassLoader();
         // Create a new ChatRoomButton.导航按钮
         final ChatRoomButton navigationButton = new ChatRoomButton();
-        navigationButton.setIcon(new ImageIcon(cl.getResource("otr_off.png")));
+        navigationButton.setIcon(new ImageIcon(cl.getResource("transfer.png")));
         // Set tooltips
         navigationButton.setToolTipText("navigate one to other");
 

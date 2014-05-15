@@ -5,7 +5,7 @@ import cn.bmwm.navigate.DirectionUtil;
 import javax.swing.*;
 
 public class NavigateUI extends javax.swing.JFrame {
-    private DefaultListModel resultListModel;
+    private DefaultListModel<String> resultListModel;
     
     /**
      * Creates new form ContactEditor
@@ -38,8 +38,8 @@ public class NavigateUI extends javax.swing.JFrame {
         clearButton = new javax.swing.JButton();
         navigateButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("E-mail Contacts");
+        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        setTitle("线路规划导航器");
 
         parametersPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("导航参数"));
 
@@ -82,11 +82,11 @@ public class NavigateUI extends javax.swing.JFrame {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(parametersPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(parametersPanelLayout.createSequentialGroup()
-                        .add(originRegionTextField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                        .add(originRegionTextField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(destinationRegionLabel)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(destinationRegionTextField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE))
+                        .add(destinationRegionTextField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
                     .add(originTextField)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, destinationTextField))
                 .addContainerGap())
@@ -126,7 +126,7 @@ public class NavigateUI extends javax.swing.JFrame {
                     .add(navigateInfoPanelLayout.createSequentialGroup()
                         .add(jLabel6)
                         .add(0, 0, Short.MAX_VALUE))
-                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE))
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE))
                 .addContainerGap())
         );
         navigateInfoPanelLayout.setVerticalGroup(
@@ -157,7 +157,7 @@ public class NavigateUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(447, Short.MAX_VALUE)
                 .add(navigateButton)
                 .add(44, 44, 44)
                 .add(clearButton)
@@ -258,7 +258,11 @@ public class NavigateUI extends javax.swing.JFrame {
     }
 
     public static void navigate() {
-
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
         try {
             javax.swing.UIManager.LookAndFeelInfo[] installedLookAndFeels = javax.swing.UIManager.getInstalledLookAndFeels();
             for (int idx = 0; idx < installedLookAndFeels.length; idx++)
@@ -284,8 +288,6 @@ public class NavigateUI extends javax.swing.JFrame {
             }
         });
     }
-
-
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearButton;
