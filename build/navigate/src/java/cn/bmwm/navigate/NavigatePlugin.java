@@ -1,6 +1,8 @@
 
 package cn.bmwm.navigate;
 
+import cn.bmwm.navigate.ui.NavigateTranscript;
+import cn.bmwm.navigate.ui.NavigateUI;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.spark.ChatManager;
 import org.jivesoftware.spark.SparkManager;
@@ -15,13 +17,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 
 
 /**
 
  */
 public class NavigatePlugin implements Plugin {
+    private final String timeFormat = "HH:mm:ss";
+    private final String dateFormat = ((SimpleDateFormat) SimpleDateFormat.getDateInstance(SimpleDateFormat.FULL)).toPattern();
 
+    private  SimpleDateFormat notificationDateFormatter;
+    private  SimpleDateFormat messageDateFormatter;
+    private NavigateTranscript transcript = null;
     /**
      * Called after Spark is loaded to initialize the new plugin.
      */
@@ -87,7 +95,7 @@ public class NavigatePlugin implements Plugin {
         ChatManager chatManager = SparkManager.getChatManager();
         final ClassLoader cl = getClass().getClassLoader();
         // Create a new ChatRoomButton.导航按钮
-        final ChatRoomButton navigationButton = new ChatRoomButton("navigate");
+        final ChatRoomButton navigationButton = new ChatRoomButton();
         navigationButton.setIcon(new ImageIcon(cl.getResource("otr_off.png")));
         // Set tooltips
         navigationButton.setToolTipText("navigate one to other");
@@ -101,10 +109,10 @@ public class NavigatePlugin implements Plugin {
                     navigationButton.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             //
-
-                            Frame f=    new Frame();
-                            f.setSize(200,200);
-                            f.setVisible(true);
+           /*               NavigateTranscript transcript = new NavigateTranscript();
+                            transcript.finished();*/
+                            NavigateUI.navigate();
+                            //transcript.finished(roomImpl.getParticipantJID());
                     /*        try {
                                 roomImpl.getChatInputEditor().insertText("click button");
                             } catch (BadLocationException e1) {

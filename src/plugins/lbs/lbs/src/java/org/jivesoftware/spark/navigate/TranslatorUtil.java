@@ -1,65 +1,66 @@
 
 package cn.bmwm.navigate;
 
-import com.meterware.httpunit.*;
-import com.sun.org.apache.xpath.internal.XPathAPI;
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import javax.xml.transform.TransformerException;
+
 import org.jivesoftware.spark.util.log.Log;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.swing.*;
-import javax.xml.transform.TransformerException;
-import java.io.IOException;
-import java.net.MalformedURLException;
+import com.meterware.httpunit.GetMethodWebRequest;
+import com.meterware.httpunit.HttpUnitOptions;
+import com.meterware.httpunit.WebConversation;
+import com.meterware.httpunit.WebRequest;
+import com.meterware.httpunit.WebResponse;
+import com.sun.org.apache.xpath.internal.XPathAPI;
 
 /**
  * A utility class that uses google's translation service to translate text to various languages.
  */
-public class DirectionUtil {
-
-    private static final String output = "xml";
-
-    private static final String ak = "k6LRNg83n9cTeZIgqAClxL4Z";
-
-    private static final DefaultListModel resultListModel = new DefaultListModel();
-
-    private DirectionUtil() {
+public class TranslatorUtil {
+    private TranslatorUtil() {
 
     }
 
+    public static String translate(String text, TranslationType type) {
+        if (type == null) {
+            return text;
+        }
 
-    public static DefaultListModel navigate(String origin, String destination, String origin_region, String destination_region) {
+        return useGoogleTranslator(text, type);
+    }
+
+    private static String useGoogleTranslator(String text, TranslationType type) {
     	
         String response = "";
-        String urlString = "http://api.map.baidu.com/direction/v1?mode=driving&origin=" + origin +
-                                        "&destination=" + destination +
-                                        " &origin_region=" + origin_region +
-                                        "&destination_region=" + destination_region +
-                                        "&output=" + output +
-                                         "&ak=" + ak;
+        String urlString = "http://translate.google.com/translate_t?text=" + text + "&langpair=" + type.getID();
         // disable scripting to avoid requiring js.jar
         HttpUnitOptions.setScriptingEnabled(false);
 
         // create the conversation object which will maintain state for us
         WebConversation wc = new WebConversation();
 
-        // Obtain the baidu navigate result
+        // Obtain the google translation page
         WebRequest webRequest = new GetMethodWebRequest(urlString);
-        // required to prevent a 403 forbidden error from baidu
+        // required to prevent a 403 forbidden error from google
         webRequest.setHeaderField("User-agent", "Mozilla/4.0");
+
         try {
             WebResponse webResponse = wc.getResponse(webRequest);
             //NodeList list = webResponse.getDOM().getDocumentElement().getElementsByTagName("div");
             try {
-				NodeList list2 = XPathAPI.selectNodeList(webResponse.getDOM(), "//steps/content/instructions/text()");
+				NodeList list2 = XPathAPI.selectNodeList(webResponse.getDOM(), "//span[@id='result_box']/span/text()");
 			
 				for (int i = 0; i < list2.getLength(); ++i)
 				{
-                    resultListModel.addElement("<html>" + list2.item(i).getNodeValue() + "</html>");
-				//	response = response + list2.item(i).getNodeValue()+" \n";
+					response = response + list2.item(i).getNodeValue()+" ";
 				}
-
-            } catch (TransformerException e) {
+				
+				
+			} catch (TransformerException e) {
 				Log.warning("Translator error",e);
 			}
             
@@ -84,7 +85,7 @@ public class DirectionUtil {
             Log.error("Could not parse response content: " + e);
         }
 
-        return resultListModel;
+        return response;
     }
 
     /**
